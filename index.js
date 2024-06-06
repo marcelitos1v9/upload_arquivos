@@ -4,6 +4,7 @@ const app = express()
 import connection from "./config/sequelize-config.js"
 import Galeria from "./models/Galeria.js"
 import GaleriaService from "./services/GaleriaService.js"
+import Imagem from "./models/Galeria.js"
 
 app.use(express.static('public'))
 app.set("view engine","ejs")
@@ -28,7 +29,14 @@ connection.query(`CREATE DATABASE IF NOT EXISTS galeria`).then(()=>{
  const upload = multer({dest:"public/uploads/"})
 
  app.get("/",(req,res)=>{
-    res.render("index")
+    GaleriaService.SelectPictures().then(
+        imagens=>{
+            res.render("index",{
+                imagens:imagens
+            })
+        }
+    )
+  
  })
 
  app.post("/upload",upload.single("file"),(req,res)=>{

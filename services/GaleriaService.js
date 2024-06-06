@@ -2,14 +2,20 @@
 
 import Galeria from "../models/Galeria.js"
 
-class GaleriaService{
-    Save(file){
+class GaleriaService {
+    Save(file) {
         //metodo para salvar uma foto
         Galeria.create({
             file: file
         })
     }
-    //metodo para ler uma imagem
+    //metodo para buscar imagens
+    SelectPictures(){
+        const galeria = Galeria.findAll()
+        return galeria
+    }
 }
+
+
 
 export default new GaleriaService()
